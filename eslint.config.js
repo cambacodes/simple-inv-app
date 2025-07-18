@@ -33,6 +33,13 @@ export default tseslint.config(
         "error",
         { checksVoidReturn: { attributes: false } },
       ],
+      "no-restricted-imports": [
+        "error",
+        {
+          name: "zod",
+          message: "Use `import { z } from 'zod/v4'` instead to ensure v4.",
+        },
+      ],
     },
   },
   {
