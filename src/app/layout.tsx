@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "@ant-design/v5-patch-for-react-19";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
