@@ -9,3 +9,59 @@ datasource db {
     provider = "mysql"
     url      = env("DATABASE_URL")
 }
+
+model InventoryItem {
+    id          Int        @id @default(autoincrement())
+    name        String     @unique @db.VarChar(255)
+    description String?    @db.Text
+    stock       Int
+    SaleItem    SaleItem[]
+
+    @@index([name])
+}
+
+model Client {
+    id             Int      @id @default(autoincrement())
+    firstName      String   @db.VarChar(50)
+    firstLastName  String   @db.VarChar(50)
+    secondLastName String   @db.VarChar(50)
+    ci             String   @unique @db.VarChar(50)
+    email          String   @unique @db.VarChar(255)
+    phoneNumber    String   @db.VarChar(20)
+    nit            String   @unique @db.VarChar(50)
+    birthday       DateTime
+    countryOfBirth String   @db.VarChar(50)
+    Sale           Sale[]
+
+    @@index([firstName])
+    @@index([firstLastName])
+    @@index([secondLastName])
+    @@index([ci])
+    @@index([email])
+    @@index([nit])
+}
+
+model Sale {
+    id         String     @id @default(uuid())
+    clientId   Int
+    saleNumber Int        @unique @default(autoincrement())
+    saleDate   DateTime   @default(now())
+    saleItems  SaleItem[]
+    client     Client     @relation(fields: [clientId], references: [id])
+
+    @@index([saleNumber])
+    @@index([saleDate])
+    @@index([clientId])
+}
+
+model SaleItem {
+    id              Int           @id @default(autoincrement())
+    saleId          String
+    inventoryItemId Int
+    quantity        Int
+    inventoryItem   InventoryItem @relation(fields: [inventoryItemId], references: [id])
+    sale            Sale          @relation(fields: [saleId], references: [id])
+
+    @@unique([saleId, inventoryItemId])
+    @@index([inventoryItemId])
+}
