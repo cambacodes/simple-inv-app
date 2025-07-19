@@ -23,7 +23,7 @@ export const centsToBolivianos = (cents: number): number => {
  */
 export const formatPrice = (cents: number): string => {
   const bolivianos = centsToBolivianos(cents);
-  return `${bolivianos.toFixed(2).replace('.', ',')} Bs`;
+  return `${bolivianos.toFixed(2).replace(".", ",")} Bs`;
 };
 
 /**
@@ -32,23 +32,27 @@ export const formatPrice = (cents: number): string => {
  * @param input - String de entrada del usuario (por ejemplo, "25,50" o "25.50")
  * @returns Cantidad en centavos o null si es inválido
  */
-export const parsePrice = (input: string): number | null => {  
-  const normalized = input.replace(',', '.');
+export const parsePrice = (input: string): number | null => {
+  const normalized = input.replace(",", ".");
   const parsed = parseFloat(normalized);
-  
+
   if (isNaN(parsed) || parsed < 0) {
     return null;
   }
-  
+
   return bolivianosToCents(parsed);
 };
-
 
 /**
  * Calcula el precio total para varios items
  * @param items - Array de {priceCents: number, quantity: number}
  * @returns Total en centavos
  */
-export const calculateTotal = (items: Array<{ basePriceCents: number; stock: number }>): number => {
-  return items.reduce((total, item) => total + (item.basePriceCents * item.stock), 0);
+export const calculateTotal = (
+  items: Array<{ basePriceCents: number; stock: number }>
+): number => {
+  return items.reduce(
+    (total, item) => total + item.basePriceCents * item.stock,
+    0
+  );
 };

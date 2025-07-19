@@ -4,15 +4,20 @@ import { INTERNAL_SERVER_ERROR } from "~/constants/error-messages";
 import { bolivianosToCents } from "~/lib/price";
 import { handlePrismaError } from "~/lib/prisma-error-handler";
 import { db } from "~/server/db";
-import type { CreateInventoryItemSchema } from "~/server/schema/inventory-item-schema";
+import type { UpdateInventoryItemSchema } from "~/server/schema/inventory-item-schema";
 
-export const createInventoryItem = async (
-  input: z.infer<typeof CreateInventoryItemSchema>
+export const upsertInventoryItem = async (
+  input: z.infer<typeof UpdateInventoryItemSchema>
 ) => {
-  const { price, ...rest } = input;
   try {
-    const inventoryItem = await db.inventoryItem.create({
-      data: {
+    const { price = 0, ...rest } = input;
+    const inventoryItem = await db.inventoryItem.upsert({
+      where: { id: input.id },
+      update: {
+        ...rest,
+        basePriceCents: bolivianosToCents(price),
+      },
+      create: {
         ...rest,
         basePriceCents: bolivianosToCents(price),
       },
