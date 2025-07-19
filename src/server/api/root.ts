@@ -9,8 +9,8 @@ import { salesRouter } from "./routers/sales-router";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  client: clientRouter,
-  inentory: inventoryRouter,
+  cliente: clientRouter,
+  inventory: inventoryRouter,
   sales: salesRouter,
 });
 

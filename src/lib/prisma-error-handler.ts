@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import {
   ErrorMessages,
@@ -9,28 +10,30 @@ import { capitalize } from "./utils";
 type ErrorKey = keyof typeof ErrorMessages;
 
 export const handlePrismaError = (err: unknown, errorKey: ErrorKey) => {
-  if (err instanceof Error && "code" in err && typeof err.code === "string") {
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
     switch (err.code) {
       case "P2002": {
-        if ("meta" in err) {
-          const meta = err.meta as { target?: string[] };
-          const field = meta.target?.[0] ?? "unknown";
-          const messages = ErrorMessages[errorKey];
+        const meta = err.meta as {
+          target?: string | string[];
+          modelName?: string;
+        };
+        const field = Array.isArray(meta.target)
+          ? meta.target.at(0)
+          : (meta.target?.split("_").at(1) ?? "unknown");
 
-          const message =
-            messages.duplicate?.[field as keyof typeof messages.duplicate] ??
-            INTERNAL_SERVER_ERROR;
+        const messages = ErrorMessages[errorKey];
 
-          throw new TRPCError({
-            code: "CONFLICT",
-            message,
-          });
-        }
-        break;
+        const message =
+          messages.duplicate?.[field as keyof typeof messages.duplicate] ??
+          INTERNAL_SERVER_ERROR;
+
+        throw new TRPCError({
+          code: "CONFLICT",
+          message,
+        });
       }
       case "P2025": {
         const name = capitalize(errorKey);
-
         throw new TRPCError({
           code: "NOT_FOUND",
           message: `${name} ${RECORD_NOT_FOUND}`,
@@ -38,6 +41,8 @@ export const handlePrismaError = (err: unknown, errorKey: ErrorKey) => {
       }
     }
   }
+
+  console.error("Unhandled error in handlePrismaError:", err);
 
   throw new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
