@@ -1,9 +1,6 @@
 import { Faker, en, es } from "@faker-js/faker";
-import type { z } from "zod/v4";
 import { createClient } from "~/server/api/procedures/client/create-client";
 import { createInventoryItem } from "~/server/api/procedures/inventory/create-inventory-item";
-import type { CreateClientSchema } from "~/server/schema/client-schema";
-import { type CreateInventoryItemSchema } from "~/server/schema/inventory-item-schema";
 
 const faker = new Faker({
   locale: [es, en],
@@ -12,9 +9,8 @@ const demoClients = 10;
 const demoInventoryItems = 5;
 
 export async function main() {
-  const clients: Promise<z.infer<typeof CreateClientSchema>>[] = [];
-  const inventoryItems: Promise<z.infer<typeof CreateInventoryItemSchema>>[] =
-    [];
+  const clients = [];
+  const inventoryItems = [];
 
   for (let i = 0; i < demoClients; i++) {
     const fakeClient = {
@@ -37,6 +33,7 @@ export async function main() {
       name: faker.commerce.productName(),
       description: faker.commerce.productDescription(),
       stock: faker.number.int({ min: 0, max: 100 }),
+      price: faker.number.float({ min: 10, max: 1000 }),
     };
 
     inventoryItems.push(createInventoryItem(fakeInventoryItem));

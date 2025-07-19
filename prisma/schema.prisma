@@ -11,11 +11,12 @@ datasource db {
 }
 
 model InventoryItem {
-    id          Int        @id @default(autoincrement())
-    name        String     @unique @db.VarChar(255)
-    description String?    @db.Text
-    stock       Int
-    SaleItem    SaleItem[]
+    id             Int        @id @default(autoincrement())
+    name           String     @unique @db.VarChar(255)
+    description    String?    @db.Text
+    stock          Int
+    basePriceCents Int
+    SaleItem       SaleItem[]
 
     @@index([name])
 }
