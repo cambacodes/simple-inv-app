@@ -132,7 +132,6 @@ export default function InventoryItemUpsertForm({
                       return Promise.resolve();
                     }
 
-                    // Allow up to 2 decimal places
                     const isValidDecimal =
                       typeof value === "number" &&
                       Number.isFinite(value) &&

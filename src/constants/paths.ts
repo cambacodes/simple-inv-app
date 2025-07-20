@@ -7,6 +7,9 @@ export const clientViewPath = (id: number, redirectTo?: string) => {
 export const clientEditPath = (id: number, redirectTo?: string) => {
   return withRedirectTo(`/clients/${id}/edit`, redirectTo);
 };
+export const clientCreatePath = (redirectTo?: string) => {
+  return withRedirectTo(`/clients/create`, redirectTo);
+};
 
 export const inventoryPath = () => "/inventory";
 export const inventoryViewPath = (id: number, redirectTo?: string) => {

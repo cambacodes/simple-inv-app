@@ -53,7 +53,6 @@ export default function EditInventoryPage() {
   }
 
   const handleFinish = async (values: InventoryItemFormData) => {
-    console.log("🚀 ~ handleFinish ~ values:", values);
     try {
       const inventoryData = {
         ...inventoryItem,

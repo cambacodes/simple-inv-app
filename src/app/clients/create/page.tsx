@@ -9,9 +9,7 @@ import ClientUpsertForm, {
 } from "~/feature/client/components/client-upsert-form";
 import { api } from "~/trpc/react";
 
-type Props = {};
-
-export default function CreateClientPage({}: Props) {
+export default function CreateClientPage() {
   const router = useRouter();
   const [form] = useForm();
   const utils = api.useUtils();

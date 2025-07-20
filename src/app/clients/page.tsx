@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { ClientFilter } from "~/feature/client/components/client-filter";
 import { clientColumns } from "~/feature/client/constants";
-import { useClientFilter } from "~/feature/client/hooks/useClientFilter";
+import { useClientFilter } from "~/feature/client/hooks/use-client-filter";
 import { api } from "~/trpc/react";
 import { ActionTable } from "../components/actions-table";
 import { useDebounced } from "../hooks/use-debounced";
@@ -135,7 +135,7 @@ export default function ClientsPage() {
             },
           }}
           actions={{
-            onDelete: handleDelete,
+            onDelete: (item) => void handleDelete(item),
             onView: handleView,
             onEdit: handleEdit,
           }}

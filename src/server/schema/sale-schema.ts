@@ -1,4 +1,5 @@
 import { z } from "zod/v4";
+import { ClientFilterSchema } from "./client-schema";
 
 export const SaleItemSchema = z.object({
   inventoryItemId: z.number().int(),
@@ -17,4 +18,8 @@ export const CreateSaleSchema = SaleSchema.omit({
   id: true,
   saleDate: true,
   saleNumber: true,
+});
+
+export const SaleFilterSchema = ClientFilterSchema.extend({
+  saleNumber: z.number().int().optional(),
 });
