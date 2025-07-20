@@ -1,9 +1,10 @@
-import "~/styles/globals.css";
 import "@ant-design/v5-patch-for-react-19";
+import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
+import AppLayout from "./components/app-layout";
 import Providers from "./components/providers";
 
 export const metadata: Metadata = {
@@ -22,8 +23,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`}>
-      <body className="bg-gray-50">
-        <Providers>{children}</Providers>
+      <body>
+        <Providers>
+          <AppLayout>{children}</AppLayout>
+        </Providers>
       </body>
     </html>
   );
