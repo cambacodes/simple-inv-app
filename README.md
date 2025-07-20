@@ -1,29 +1,41 @@
-# Create T3 App
+# Aplicación de Inventario Simple
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Una aplicación sencilla de gestión de inventario
 
-## What's next? How do I make an app with this?
+## Demo
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Puedes probar la aplicación en línea en: [https://simple-inv-app.vercel.app/](https://simple-inv-app.vercel.app/)
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Inicio Rápido
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### 1. Instalar Dependencias
 
-## Learn More
+```bash
+pnpm install
+```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### 2. Configurar Entorno
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Crea un archivo `.env` en el directorio raíz con:
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```env
+DATABASE_URL="mysql://usuario:contraseña@localhost:3306/nombre_base_datos"
+```
 
-## How do I deploy this?
+### 3. Configurar Base de Datos
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+# Enviar el esquema a la base de datos
+pnpm db:push
+
+# (Opcional) Poblar la base de datos con datos de ejemplo
+pnpm db-seed
+```
+
+### 4. Ejecutar el Servidor de Desarrollo
+
+```bash
+pnpm dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) para ver la aplicación.
